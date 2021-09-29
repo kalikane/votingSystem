@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="votingSystem.MainPage">
+
+    <StackLayout Orientation ="Vertical">
+        <Button  Text="Generate new keys" Clicked="GenerationPairkey" HorizontalOptions="Center" />
+        <Label  Text="Private Key" Margin="5,20,0,20" FontSize="Medium" HorizontalTextAlignment="Start"/>
+        <Editor x:Name="privateKeyEditor" Placeholder="here is the private key" HeightRequest="75"/>
+        <Label Text="Public Key" Margin="5,20,0,20" FontSize="Medium" HorizontalTextAlignment="Start"/>
+        <Editor x:Name="publicKeyEditor" Placeholder="here is the public" HeightRequest="75"/>
+        <Label Text="Test Encrypt/Decrypt" FontSize="Medium" HorizontalTextAlignment="Center" Margin="0,20,0,20"/>
+        <Label Text="Text to encrypt:" FontSize="Medium" HorizontalTextAlignment="Start" Margin="5,20,0,20"/>
+        <Editor x:Name="textClairEditor" Placeholder="Entry your text" HeightRequest="75"/>
+        <Button Text="Encrypt / Decrypt" Clicked="EncryptMessage" HorizontalOptions="Center" />
+        <Label Text="Encrypted:" FontSize="Medium" 
+               HorizontalTextAlignment="Start" Margin="5,20,0,20"/>
+        <Editor x:Name="textChiffreEditor" Placeholder="text encrypted" HeightRequest="75"/>
+    </StackLayout>
+
+</ContentPage>

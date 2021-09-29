@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:votingSystem.ViewModels"
+
+             x:Class="votingSystem.Views.VoterEnrollementView">
+
+
+    <ContentPage.BindingContext>
+        <vm:VoterEnrollementViewModel/>
+    </ContentPage.BindingContext>
+    
+    <ContentPage.Content>
+
+
+
+        <Grid BackgroundColor="BlanchedAlmond" Padding="20" VerticalOptions="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            
+            <!--Le Titre-->
+            <Label Grid.Row="0" Text=" Inscription" TextTransform="Uppercase"
+                   FontAttributes="Bold" FontSize="32" HorizontalTextAlignment="Center"
+                   Margin="0 ,0 ,0 ,20"/>
+            
+            <!--Le Formulaire-->
+
+            <StackLayout Grid.Row="1" Orientation="Vertical">
+                <Label Text="Numéro CNI :" FontAttributes="Bold" FontSize="Body" HorizontalTextAlignment="Start" />
+                <Entry Placeholder="Entrez le numero de votre VNI" Text="{Binding CNI}"/>
+                
+                <Label Text="Nom :" FontAttributes="Bold" FontSize="Body" HorizontalTextAlignment="Start" />
+                <Entry Placeholder="Votre nom" Text="{Binding Name}"/>
+
+                <Label Text="Prénom :" FontAttributes="Bold" FontSize="Body" HorizontalTextAlignment="Start" />
+                <Entry Placeholder="Votre prénom" Text="{Binding Surname}"/>
+
+                <Label Text="Date De Naissance :" FontAttributes="Bold" FontSize="Body" HorizontalTextAlignment="Start" />
+                <DatePicker x:Name="startDatePicker"
+                            Format="d - MM -yyyy"
+                            Date="{Binding BirthDay}"
+                    />
+
+                <Label Text="Lieu de naissance :" FontAttributes="Bold" FontSize="Body" HorizontalTextAlignment="Start" />
+                <Entry Placeholder=" Entrez le lieu de naissance" Text="{Binding BirthPlace}"/>
+
+                <Label Text="Nom du père :" FontAttributes="Bold" FontSize="Body" HorizontalTextAlignment="Start" />
+                <Entry Placeholder="Nom du père" Text="{Binding FatherName}"/>
+
+                <Label Text="Nom de la mère :" FontAttributes="Bold" FontSize="Body" HorizontalTextAlignment="Start" />
+                <Entry Placeholder="Nom du père" Text="{Binding MotherName}"/>
+
+            </StackLayout>
+
+
+            <Button Grid.Row="2"
+                        Margin ="0, 0, 0, 0"
+                        Text="Je m'inscris" FontSize="30" TextColor="BlanchedAlmond"
+                        BackgroundColor="DarkCyan" HorizontalOptions="Center"
+                        Command="{Binding EnrollementCommand}"/>
+
+
+
+        </Grid>
+        
+        
+
+    </ContentPage.Content>
+</ContentPage>

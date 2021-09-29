@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="votingSystem.Views.VoterAuthentificationView">
+    <ContentPage.Content>
+        <Grid BackgroundColor="BlanchedAlmond" >
+            <Grid.RowDefinitions >
+                <!--<RowDefinition Height="auto"/>-->
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+
+            </Grid.RowDefinitions>
+
+
+            <StackLayout Grid.Row="0" Orientation="Vertical">
+                <!--piker-->
+                <Label  Text="Selectioner votre bureau de vote parmis ceux listés svp!!!" 
+                        FontSize="Large" HorizontalTextAlignment="Center"
+                        FontAttributes="Bold" Margin="0, 10, 0, 20"/>
+                <!--<Picker ItemsSource="{Binding VotingOffices}" SelectedItem="{Binding VotingOficceSelected}"/>-->
+            </StackLayout>
+            
+            <CollectionView Grid.Row="1"
+                            ItemsSource="{Binding VotingOffices}"
+                            Margin="0 , 20 , 10, 0"
+                            VerticalOptions="Start"
+                            SelectionChanged="CollectionView_SelectionChanged"
+                            SelectionMode="Single">
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+
+                            <Frame Grid.Row="0" Margin="10,10" BackgroundColor="White"
+                                       CornerRadius="15"   HasShadow="True">
+
+                                <StackLayout>
+
+                                    <!--Code du bureau-->
+                                    <Label  Margin="30,0,0,0" FontSize="20" VerticalOptions="Center">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="Code bureau :" FontSize="Medium" FontAttributes="Bold"/>
+                                                <Span Text="{Binding code}" FontSize="Medium" TextColor="#a4a7b6"/>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                    <!--Nom du bureau-->
+                                    <Label Margin="30,0,0,0" FontSize="15" VerticalOptions="Center">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="Nom bureau :" FontSize="Medium" FontAttributes="Bold"/>
+                                                <Span Text="{Binding officeName}" FontSize="Medium" TextColor="#a4a7b6"/>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+
+                                    <!--Localisation du bureau-->
+                                    <Label Margin="30,0,0,0" FontSize="15" VerticalOptions="Center">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="Lieu :" FontSize="Medium" FontAttributes="Bold"/>
+                                                <Span Text="{Binding localisation}" FontSize="Medium" TextColor="#a4a7b6"/>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+
+                                </StackLayout>
+
+                            </Frame>
+
+                        </Grid>
+
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+
+
+
+            </CollectionView>
+
+            <!--<Button Grid.Row="2" Text="Je m'authentifie" FontSize="30" BackgroundColor="DarkCyan"
+                    Command="{Binding authentificationCommand}"/> -->
+
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

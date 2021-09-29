@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:bevahiors="clr-namespace:votingSystem.Behaviors"
+             Title="Registration Form"
+             x:Class="votingSystem.BehaviorDemo">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Entry">
+                <Setter Property="Margin" Value="20" />
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList >
+                        <VisualStateGroup x:Name="commonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="LightGreen"/>
+                                </VisualState.Setters>
+                            </VisualState>
+
+                            <VisualState x:Name="Focused">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="LightBlue"/>
+                                </VisualState.Setters>
+                            </VisualState>
+
+                            <VisualState x:Name="Disabled">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="LightYellow"/>
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+
+                </Setter>
+
+            </Style>
+        </ResourceDictionary>
+
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout x:Name="MainLayout">
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup x:Name="ValidationStates">
+                    <VisualState x:Name="Valid">
+                        <VisualState.Setters>
+                            <Setter TargetName="LabelHelper"
+                                    Property="Label.IsVisible" Value="False"/>
+                            <Setter TargetName="EntryPassword" Property="BackgroundColor" Value="LightBlue"/>
+                        </VisualState.Setters>
+                    </VisualState>
+
+                    <VisualState x:Name="InValid">
+                        <VisualState.Setters>
+                            <Setter TargetName="LabelHelper"
+                                    Property="Label.IsVisible" Value="True"/>
+                            <Setter TargetName="EntryPassword" 
+                                    Property="BackgroundColor" Value="Red"/>
+                        </VisualState.Setters>
+                    </VisualState>
+
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+
+            <Entry x:Name="EntryID" Text="FormID 107" IsEnabled="False"/>
+
+            <Entry x:Name="EntryName" Placeholder="Enter username">
+                <Entry.Behaviors>
+                    <bevahiors:NotNullBehavior/>
+                </Entry.Behaviors>
+            </Entry>
+            <Entry x:Name="EntryPassword" Placeholder="Enter password"  TextChanged="EntryPassWord_TextChanged">
+                <Entry.Behaviors>
+                    <bevahiors:NotNullBehavior/>
+                </Entry.Behaviors>
+            </Entry>
+            <Label Text="Votre mot de passe doit avoir plus de 6 charactères"  x:Name="LabelHelper" TextColor="Red" Margin="20,0"/>
+
+            <Entry x:Name="EntryAge" Placeholder="Enter Age">
+                <Entry.Behaviors>
+                    <bevahiors:NotNullBehavior/>
+                </Entry.Behaviors>
+            </Entry>
+            <Entry x:Name="EntryMobile" Placeholder="Enter mobile"/>
+            <Button Text="Register" >
+
+            </Button>
+
+
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
