@@ -20,17 +20,37 @@ namespace votingSystem.ViewModels
 
         public BulletinViewModel()
         {
-
             BulletinsDeVote = new ObservableCollection<BulletinVote>();
-            votingCommand = new Command(async() => await VotingCommandAsyn());
             //Récupération des bulletins de vote
             _ = GetBulletinsVote();
-
         }
 
-        private Task VotingCommandAsyn()
+        /// <summary>
+        /// Lance l'opération de vote.
+        /// </summary>
+        /// <param name="bulletinSelect"></param>
+        /// <returns></returns>
+        public async Task VotingCommandAsyn(BulletinVote bulletinSelect)
         {
-            throw new NotImplementedException();
+            if (bulletinSelect == null) return;
+
+            //Pop de confirmation 
+            bool confirm = await Application.Current.MainPage.DisplayAlert("CONFIRMATION", "Confirmer vous vore vote ?", "Yes", "No");
+            VotingService vs = new VotingService();
+            string lockCode = Preferences.Get(Constante.keyPreference_ElectorLockCode, string.Empty);
+            string randomCode = Preferences.Get(Constante.keyPrefernce_ElectorRandomValue, string.Empty);
+            string candidatChoice = bulletinSelect.encryptedBallot;
+
+
+            if (confirm)
+            {
+               await vs.VoteAsync(candidatChoice, lockCode, candidatChoice);
+            }
+            else
+            {
+                return;
+            }
+
         }
 
         /// <summary>
@@ -41,7 +61,6 @@ namespace votingSystem.ViewModels
         {
             string rs = Preferences.Get(Constante.keyPrefernce_ElectorRandomValue, string.Empty);
             string elc = Preferences.Get(Constante.keyPreference_ElectorLockCode, string.Empty);
-
             VotingService vs = new VotingService();
 
             try
@@ -60,7 +79,6 @@ namespace votingSystem.ViewModels
                 Console.WriteLine($"BulletinViewModel:GetBulletinsVote() => Erreur survenu: {ex}");
             }
 
-            
         }
     }
 }

@@ -24,6 +24,11 @@ namespace votingSystem.Helpers
 
         public static string Url_GetBulletinsVote = "http://130.61.52.87:8090/vote/create/ballot";
 
+        /// <summary>
+        /// Routee pour récupérer le vote de l'électeur.
+        /// </summary>
+        public static string Url_ElectorVote = "http://130.61.52.87:8090/vote/create";
+
 
 
         public static string jsonFileName_ElectorInfos_AfterEnrollement = "ElectorInfos_AfterEnrollement_.json";
@@ -37,6 +42,11 @@ namespace votingSystem.Helpers
         /// Clé préférences pour récupérer le electorLockCode.
         /// </summary>
         public static string keyPreference_ElectorLockCode = "electorLockCode";
+
+        /// <summary>
+        /// Clé préférences pour récupérer le electorVote.
+        /// </summary>
+        public static string keyPreference_ElectorVOte = "electorVote";
 
         /// <summary>
         /// Générer automatiquement quand l'authentification se passe bien.

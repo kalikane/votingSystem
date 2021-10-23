@@ -45,7 +45,6 @@ namespace votingSystem.ViewModels
         {
             accessToken = Preferences.Get(Constante.keyPreference_AccesToken, string.Empty);
             VotingOffices = new ObservableCollection<VotingOfficeInfo>();
-            //authentificationCommand = new Command(async () => await AuthentificationCommandAsync());
 
             _ = GetVotingOffices();
         }

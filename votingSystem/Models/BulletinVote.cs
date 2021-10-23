@@ -7,6 +7,6 @@ namespace votingSystem.Models
     public class BulletinVote
     {
         public string encryptedBallot { get; set; }
-        public string partyCode;
+        public string partyCode { get; set; }
     }
 }

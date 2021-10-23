@@ -20,6 +20,12 @@ namespace votingSystem.Helpers
             InPrefence
         }
 
+        /// <summary>
+        /// Enrégistre le token d'accès.
+        /// </summary>
+        /// <param name="elector"></param>
+        /// <param name="_typeSave"></param>
+        /// <returns></returns>
         public static bool Save_ElectorInfos_AfterEnrollement(ElectorInfo elector , int _typeSave = 1)
         {
             // Si elector est null return false.
@@ -48,11 +54,27 @@ namespace votingSystem.Helpers
 
         }
 
+        /// <summary>
+        /// Enregistre le electorLockCode.
+        /// </summary>
+        /// <param name="electorLockCode"></param>
+        /// <returns></returns>
         public static bool Save_ElectorLockCode(string electorLockCode)
         {
             Preferences.Set(Constante.keyPreference_ElectorLockCode, electorLockCode);
             return true;
         }
 
+
+        /// <summary>
+        /// Enregistre le electorVote.
+        /// </summary>
+        /// <param name="electorVote"></param>
+        /// <returns></returns>
+        public static bool Save_ElectorVote(string electorVote)
+        {
+            Preferences.Set(Constante.keyPreference_ElectorVOte, electorVote);
+            return true;
+        }
     }
 }

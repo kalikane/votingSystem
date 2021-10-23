@@ -13,6 +13,23 @@ namespace votingSystem.ViewModels
 {
     public class VoterEnrollementViewModel : BaseViewModel
     {
+        public string ScanMessage { get; set; }
+
+        private bool tokenRecuperer;
+
+        public bool TokenRecuperer
+        {
+            get { return tokenRecuperer; }
+            set { tokenRecuperer = value; OnPropertyChanged(); }
+        }
+
+        private bool isVisible;
+
+        public bool IsVisible
+        {
+            get { return isVisible; }
+            set { isVisible = value; OnPropertyChanged(); }
+        }
 
 
         private string _CNI =Guid.NewGuid().ToString();
@@ -101,16 +118,35 @@ namespace votingSystem.ViewModels
 
         public Command EnrollementCommand { get; set; }
 
+        public Command SetTokenBoolCommand { get; set; }
 
 
         public VoterEnrollementViewModel()
         {
+            ScanMessage = "Veuiller scanner votre QRCode pour accedr au sytème";
+            IsVisible = false;
+            TokenRecuperer = false;
             EnrollementCommand = new Command(async () => await EnrollementCommandAsync());
+            SetTokenBoolCommand = new Command(async () => await SetTokenBoolCommandAsync(false));
+
         }
 
+        public async Task SetTokenBoolCommandAsync(bool Tokenstate)
+        {
+            TokenRecuperer = Tokenstate;
+        }
 
         public async Task EnrollementCommandAsync()
         {
+            Console.WriteLine($"Token: {Preferences.Get(Constante.keyPreference_AccesToken, string.Empty)}");
+
+            ScanMessage = "Veuillez patienter SVP !!!";
+            await Application.Current.MainPage.Navigation.PushAsync(new VoterAuthentificationView());
+
+         
+
+
+            /*
             if (string.IsNullOrEmpty(CNI) || string.IsNullOrEmpty(Name)
                 || string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(Surname)
                 || string.IsNullOrEmpty(BirthDay.ToString("d"))
@@ -146,6 +182,10 @@ namespace votingSystem.ViewModels
                 await Application.Current.MainPage.Navigation.PushAsync(new VoterAuthentificationView());
 
             } 
+
+            */
+            // On navigue vers la page suivante.
+
         }
 
 
