@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 using votingSystem.Helpers;
 using votingSystem.Models;
 using votingSystem.Services;
+using votingSystem.Views;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace votingSystem.ViewModels
 {
-    public class BulletinViewModel :  BaseViewModel
+    public class BulletinViewModel : BaseViewModel
     {
 
         public ObservableCollection<BulletinVote> BulletinsDeVote { get; set; }
@@ -35,8 +36,9 @@ namespace votingSystem.ViewModels
             if (bulletinSelect == null) return;
 
             //Pop de confirmation 
-            bool confirm = await Application.Current.MainPage.DisplayAlert("CONFIRMATION", "Confirmer vous vore vote ?", "Yes", "No");
+            bool confirm = await Application.Current.MainPage.DisplayAlert("CONFIRMATION", "Confirmez-vous votre vote ?", "Yes", "No");
             VotingService vs = new VotingService();
+
             string lockCode = Preferences.Get(Constante.keyPreference_ElectorLockCode, string.Empty);
             string randomCode = Preferences.Get(Constante.keyPrefernce_ElectorRandomValue, string.Empty);
             string candidatChoice = bulletinSelect.encryptedBallot;
@@ -44,7 +46,14 @@ namespace votingSystem.ViewModels
 
             if (confirm)
             {
-               await vs.VoteAsync(candidatChoice, lockCode, candidatChoice);
+                await vs.VoteAsync(candidatChoice, lockCode, randomCode);
+
+                await Application.Current.MainPage.DisplayAlert("CONFIRMATION", "Merci, Votre vote a bien été enrégistré", "OK");
+
+                // Allez sur le HUD FinDeVote
+                await Application.Current.MainPage.Navigation.PushModalAsync(new FInDeVoteView());
+
+
             }
             else
             {
@@ -57,7 +66,7 @@ namespace votingSystem.ViewModels
         /// Appel le service pour récupérer les bulletins de votes de l'électeur.
         /// </summary>
         /// <returns></returns>
-        public  async Task GetBulletinsVote()
+        public async Task GetBulletinsVote()
         {
             string rs = Preferences.Get(Constante.keyPrefernce_ElectorRandomValue, string.Empty);
             string elc = Preferences.Get(Constante.keyPreference_ElectorLockCode, string.Empty);

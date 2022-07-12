@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="votingSystem.Views.FInDeVoteView">
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical" HorizontalOptions="CenterAndExpand" BackgroundColor="BlanchedAlmond">
+            
+            <Label Text="Vote Effectué"
+                   FontSize="Large"
+                   HorizontalTextAlignment="Center"
+                   Margin="0,20,0,20"
+                 />
+
+            <Label Text="Vous serez notifié une fois les résultats de vote disponible !!!" FontSize="Medium" HorizontalTextAlignment="Center"
+                   FontAttributes="Bold" Margin="0,10,0,10"/>
+
+            <Button Text="Acceuil" Clicked="Button_ClickedAsync" Margin="0,0,0,20"/>
+            
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

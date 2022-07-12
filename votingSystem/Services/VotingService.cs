@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using votingSystem.Helpers;
 using votingSystem.Models;
+using votingSystem.Views;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -257,11 +258,12 @@ namespace votingSystem.Services
                 return;
 
             Uri uri = new Uri(Constante.Url_ElectorVote);
-            string json = "{\" candidatChoice \" : \"" + candidatChoice + "\"," +
-                "\" lockCode \" : \"" + lockCode + "\"," +
-                "\" randomCode \" : \"" + randomCode + "\"}";
+            string json = "{\"candidatChoice\" : \"" + candidatChoice + "\"," +
+                "\"lockCode\" : \"" + lockCode + "\"," +
+                "\"randomCode\" : \"" + randomCode + "\"}";
 
-
+            /*string jsonToPost = "{\"electorRandomValue\":\" " + electorRandomValue + "\"," +
+                                 "\"electorLockCode\": \" " + electorLockCode + " \"}";*/
 
 
             StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
@@ -273,11 +275,14 @@ namespace votingSystem.Services
             if (response.IsSuccessStatusCode)
             {
                 SaveManager.Save_ElectorLockCode(candidatChoice);
-                await Application.Current.MainPage.DisplayAlert("CONFIRMATION", "Merci, Votre vote a bien été enrégistrer", "OK");
+               
+
+
             }
             else
             {
-                await Application.Current.MainPage.DisplayAlert("ERROR", $"Une erreur du type: {response.StatusCode} est survenu", "OK");
+                await Application.Current.MainPage.DisplayAlert("ERROR", $"Une erreur du type: {response.StatusCode} est survenu avec " +
+                    $"\n candidatChoice: {candidatChoice} \n lockCode: {lockCode} \n randomCode: {randomCode}", "OK");
                 return;
 
             }

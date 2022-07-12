@@ -10,24 +10,24 @@ namespace votingSystem.Helpers
         /// <summary>
         /// Route de l'enrollement de l'électeur.
         /// </summary>
-        public static string Url_Enrollement = "http://130.61.52.87:8090/enrollment/create";
+        public static string Url_Enrollement = "https://test-back.usurvey.upowa.org/enrollment/create";
 
         /// <summary>
         /// Route pour obtenir les bureaux de vote.
         /// </summary>
-        public static string Url_GetVotingOffice = "http://130.61.52.87:8090/config/all/office";
+        public static string Url_GetVotingOffice = "https://test-back.usurvey.upowa.org/config/all/office";
 
         /// <summary>
         /// Route pour l'authentification de l'électeur.
         /// </summary>
-        public static string Url_VoterAuthentification = "http://130.61.52.87:8090/auth/elector";
+        public static string Url_VoterAuthentification = "https://test-back.usurvey.upowa.org/auth/elector";
 
-        public static string Url_GetBulletinsVote = "http://130.61.52.87:8090/vote/create/ballot";
+        public static string Url_GetBulletinsVote = "https://test-back.usurvey.upowa.org/vote/create/ballot";
 
         /// <summary>
         /// Routee pour récupérer le vote de l'électeur.
         /// </summary>
-        public static string Url_ElectorVote = "http://130.61.52.87:8090/vote/create";
+        public static string Url_ElectorVote = "https://test-back.usurvey.upowa.org/vote/create";
 
 
 

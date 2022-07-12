@@ -64,6 +64,7 @@ namespace votingSystem.Views
 
             var scan = new ZXingScannerPage();
             await Navigation.PushAsync(scan);
+
             scan.OnScanResult += (result) =>
             {
                 Device.BeginInvokeOnMainThread(async () =>
