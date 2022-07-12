@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using votingSystem.Helpers;
 using votingSystem.Models;
+using votingSystem.Views;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -24,6 +25,11 @@ namespace votingSystem.Services
 
         }
 
+        /// <summary>
+        /// Lance l'opération d'enrollement.
+        /// </summary>
+        /// <param name="_voterInfo"></param>
+        /// <returns></returns>
         public async Task<bool> EnrollVoterAsync(VoterEnrollement _voterInfo)
         {
             if (_voterInfo == null)
@@ -54,22 +60,11 @@ namespace votingSystem.Services
 
 
             HttpResponseMessage response = null;
-            try
-            {
-                response = await client.PostAsync(uri, content);
+            response = await client.PostAsync(uri, content);
 
-            }
-            catch (Exception ex)
-            {
-
-                await Application.Current.MainPage.DisplayAlert("Erreur", ex.Message, "OK");
-                return false;
-            }
 
             if (response.IsSuccessStatusCode)
             {
-
-
                 // this result string should be something like: "{"token":"rgh2ghgdsfds"}"
                 var result = await response.Content.ReadAsStringAsync();
 
@@ -82,19 +77,25 @@ namespace votingSystem.Services
                 else
                     return false;
             }
-
-            if (response.StatusCode == System.Net.HttpStatusCode.Conflict)
+            else if (response.StatusCode == System.Net.HttpStatusCode.Conflict)
             {
                 await Application.Current.MainPage.DisplayAlert("Inscription", response.RequestMessage.Content.ToString(), "OK");
-
-                Debug.WriteLine($"Code reponse = {response.RequestMessage}");
+                return false;
+            }
+            else
+            {
+                await Application.Current.MainPage.DisplayAlert("Inscription", response.RequestMessage.Content.ToString(), "OK");
                 return false;
             }
 
-            return false;
-
         }
 
+        /// <summary>
+        /// Lance le process d'authentification.
+        /// </summary>
+        /// <param name="accessToken"></param>
+        /// <param name="officeCode"></param>
+        /// <returns></returns>
         public async Task<bool> AuthenticationVoterAsync(string accessToken, string officeCode)
         {
             // Si l'accesToken ou officeCode est null return false.
@@ -113,17 +114,7 @@ namespace votingSystem.Services
             HttpResponseMessage response = null;
 
             // lancer la requète Post.
-            try
-            {
-                response = await client.PostAsync(uri, content);
-
-            }
-            catch (Exception ex)
-            {
-
-                await Application.Current.MainPage.DisplayAlert("Erreur", ex.Message, "OK");
-                return false;
-            }
+            response = await client.PostAsync(uri, content);
 
             // Si le statut code est bon désérializé l'information
             if (response.IsSuccessStatusCode)
@@ -140,16 +131,17 @@ namespace votingSystem.Services
                 else
                     return false;
             }
-
-            if (response.StatusCode == System.Net.HttpStatusCode.Conflict)
+            else if (response.StatusCode == System.Net.HttpStatusCode.Conflict)
             {
                 await Application.Current.MainPage.DisplayAlert("Authentification de l'électeur", response.RequestMessage.Content.ToString(), "OK");
-
-                Debug.WriteLine($"Code reponse = {response.RequestMessage}");
+                return false;
+            }
+            else
+            {
+                await Application.Current.MainPage.DisplayAlert("Authentification de l'électeur", response.RequestMessage.Content.ToString(), "OK");
                 return false;
             }
 
-            return false;
         }
 
         /// <summary>
@@ -210,7 +202,7 @@ namespace votingSystem.Services
         /// <param name="electorRandomValue"></param>
         /// <param name="electorLockCode"></param>
         /// <returns></returns>
-        public async Task<ObservableCollection<BulletinVote>> GetBulletinsVote( string electorRandomValue, string electorLockCode)
+        public async Task<ObservableCollection<BulletinVote>> GetBulletinsVote(string electorRandomValue, string electorLockCode)
         {
             if (string.IsNullOrEmpty(electorLockCode) || string.IsNullOrEmpty(electorRandomValue)) return null;
 
@@ -232,17 +224,8 @@ namespace votingSystem.Services
 
 
             // lancer la requète Post.
-            try
-            {
-                response = await client.PostAsync(uri, content);
+            response = await client.PostAsync(uri, content);
 
-            }
-            catch (Exception ex)
-            {
-
-                await Application.Current.MainPage.DisplayAlert("Erreur", ex.Message, "OK");
-                return null;
-            }
 
 
             if (response.IsSuccessStatusCode)
@@ -264,6 +247,46 @@ namespace votingSystem.Services
             }
             return bulletinsVote;
         }
-        
+
+        /// <summary>
+        /// Lance la requete de vote.
+        /// </summary>
+        /// <returns></returns>
+        public async Task VoteAsync(string candidatChoice, string lockCode, string randomCode)
+        {
+            if (string.IsNullOrEmpty(candidatChoice) || string.IsNullOrEmpty(lockCode) || string.IsNullOrEmpty(lockCode))
+                return;
+
+            Uri uri = new Uri(Constante.Url_ElectorVote);
+            string json = "{\"candidatChoice\" : \"" + candidatChoice + "\"," +
+                "\"lockCode\" : \"" + lockCode + "\"," +
+                "\"randomCode\" : \"" + randomCode + "\"}";
+
+            /*string jsonToPost = "{\"electorRandomValue\":\" " + electorRandomValue + "\"," +
+                                 "\"electorLockCode\": \" " + electorLockCode + " \"}";*/
+
+
+            StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            HttpResponseMessage response = null;
+            response = await client.PostAsync(uri, content);
+
+
+            if (response.IsSuccessStatusCode)
+            {
+                SaveManager.Save_ElectorLockCode(candidatChoice);
+               
+
+
+            }
+            else
+            {
+                await Application.Current.MainPage.DisplayAlert("ERROR", $"Une erreur du type: {response.StatusCode} est survenu avec " +
+                    $"\n candidatChoice: {candidatChoice} \n lockCode: {lockCode} \n randomCode: {randomCode}", "OK");
+                return;
+
+            }
+
+        }
     }
 }

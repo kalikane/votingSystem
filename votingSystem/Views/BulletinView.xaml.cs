@@ -29,7 +29,7 @@ namespace votingSystem.Views
                 return;
 
             // requete de vote
-            //_ = vavm.AuthentificationCommandAsync(votingOfficeSelected);
+            bvvm.VotingCommandAsyn(bv);
 
             Console.WriteLine($"Bulletin: {bv.partyCode}");
 

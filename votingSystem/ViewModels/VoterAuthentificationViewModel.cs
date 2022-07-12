@@ -45,7 +45,6 @@ namespace votingSystem.ViewModels
         {
             accessToken = Preferences.Get(Constante.keyPreference_AccesToken, string.Empty);
             VotingOffices = new ObservableCollection<VotingOfficeInfo>();
-            //authentificationCommand = new Command(async () => await AuthentificationCommandAsync());
 
             _ = GetVotingOffices();
         }
@@ -62,7 +61,7 @@ namespace votingSystem.ViewModels
             if (await vs.AuthenticationVoterAsync(accessToken, votingOffice.code))
             {
                 // Generation d'un electorRandomValue.
-                Preferences.Set(Constante.keyPrefernce_ElectorRandomValue, new VotingService().GetRandomString());
+                Preferences.Set(Constante.keyPrefernce_ElectorRandomValue, Guid.NewGuid().ToString());// new VotingService().GetRandomString());
                 
                 // ALlons sur la vue Bulletin de vote.
                 await Application.Current.MainPage.Navigation.PushModalAsync(new BulletinView());

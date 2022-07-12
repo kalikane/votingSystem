@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:votingSystem.ViewModels"
-
+                xmlns:zxcm="clr-namespace:ZXing.Common;assembly=zxing.portable"
+             xmlns:zxing="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms"
              x:Class="votingSystem.Views.VoterEnrollementView">
 
 
@@ -14,20 +15,28 @@
 
 
 
-        <Grid BackgroundColor="BlanchedAlmond" Padding="20" VerticalOptions="Center">
+        <Grid BackgroundColor="BlanchedAlmond" Padding="20" VerticalOptions="FillAndExpand">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             
             <!--Le Titre-->
-            <Label Grid.Row="0" Text=" Inscription" TextTransform="Uppercase"
+            <StackLayout Grid.Row="0" Orientation="Vertical">
+                <Label Grid.Row="0" Text="Bienvenue" TextTransform="Uppercase"
                    FontAttributes="Bold" FontSize="32" HorizontalTextAlignment="Center"
+                   Margin="0 ,0 ,0 ,50"/>
+
+                <Label Grid.Row="0" Text="{Binding ScanMessage}" TextTransform="Uppercase"
+                   FontAttributes="Bold" FontSize="Large" HorizontalTextAlignment="Center"
                    Margin="0 ,0 ,0 ,20"/>
+
+            </StackLayout>
+           
             
             <!--Le Formulaire-->
-
+            <!--
             <StackLayout Grid.Row="1" Orientation="Vertical">
                 <Label Text="Numéro CNI :" FontAttributes="Bold" FontSize="Body" HorizontalTextAlignment="Start" />
                 <Entry Placeholder="Entrez le numero de votre VNI" Text="{Binding CNI}"/>
@@ -54,13 +63,32 @@
                 <Entry Placeholder="Nom du père" Text="{Binding MotherName}"/>
 
             </StackLayout>
+           
 
 
-            <Button Grid.Row="2"
-                        Margin ="0, 0, 0, 0"
-                        Text="Je m'inscris" FontSize="30" TextColor="BlanchedAlmond"
+            <zxing:ZXingScannerView
+                Grid.Row="1"
+                x:Name="scanView"
+                OnScanResult="Handle_OnScanResult"
+                IsScanning="True"
+                WidthRequest="300"
+                HeightRequest="300"
+                VerticalOptions="CenterAndExpand"
+                HorizontalOptions="CenterAndExpand"/>
+            <zxing:ZXingDefaultOverlay Grid.Row="1" TopText="Align the barcode within the frame"/>
+
+ -->
+
+            <Label Grid.Row="1" x:Name="_TokenText" Text="" TextTransform="Uppercase"
+                   FontAttributes="Bold" FontSize="Medium" HorizontalTextAlignment="Start"
+                   IsVisible="{Binding TokenRecuperer}"
+                   Margin="0 ,0 ,0 ,20"/>
+
+            <Button Grid.Row="1"
+                        Margin ="0, 100, 0, 0"
+                        Text="Je Scan" FontSize="30" TextColor="BlanchedAlmond"
                         BackgroundColor="DarkCyan" HorizontalOptions="Center"
-                        Command="{Binding EnrollementCommand}"/>
+                        Clicked="Button_ClickedAsync"/>
 
 
 
