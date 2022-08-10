@@ -7,27 +7,29 @@ namespace votingSystem.Helpers
 {
     public static class Constante
     {
+        private const string BaseUrl = "https://test-back.usurvey.upowa.org";
+
         /// <summary>
         /// Route de l'enrollement de l'électeur.
         /// </summary>
-        public static string Url_Enrollement = "https://test-back.usurvey.upowa.org/enrollment/create";
+        public static string Url_Enrollement = $"{BaseUrl}/enrollment/create";
 
         /// <summary>
         /// Route pour obtenir les bureaux de vote.
         /// </summary>
-        public static string Url_GetVotingOffice = "https://test-back.usurvey.upowa.org/config/all/office";
+        public static string Url_GetVotingOffice = $"{BaseUrl}/config/all/office";
 
         /// <summary>
         /// Route pour l'authentification de l'électeur.
         /// </summary>
-        public static string Url_VoterAuthentification = "https://test-back.usurvey.upowa.org/auth/elector";
+        public static string Url_VoterAuthentification = $"{BaseUrl}/auth/elector";
 
-        public static string Url_GetBulletinsVote = "https://test-back.usurvey.upowa.org/vote/create/ballot";
+        public static string Url_GetBulletinsVote = $"{BaseUrl}/vote/create/ballot";
 
         /// <summary>
         /// Routee pour récupérer le vote de l'électeur.
         /// </summary>
-        public static string Url_ElectorVote = "https://test-back.usurvey.upowa.org/vote/create";
+        public static string Url_ElectorVote = $"{BaseUrl}/vote/create";
 
 
 
